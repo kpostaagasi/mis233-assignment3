@@ -24,6 +24,10 @@ npm test          # Vitest tests (Bonus 2)
   counts, active one highlighted), a Clear done button, an Undo button and a "No tasks here."
   message. The visible list and the counts are computed while rendering, not stored.
 
+Accessibility: the filter buttons use `aria-pressed` for the active filter and sit in a labelled
+group, the input and the Next/Delete buttons have labels, and the empty message is a `status`
+so screen readers announce it.
+
 Screenshots are in `screenshots/` (all.png, todo.png, in-progress.png, done.png).
 
 ## Bonus 1: Undo
@@ -35,15 +39,23 @@ undoable, and the Undo button is disabled while `past` is empty.
 
 ## Bonus 2: Tests
 
-Tests are in `src/taskReducer.test.ts` (every action, advance three times back to todo, old state
-not changed, unknown id, empty list, clearDone with nothing done, counts after a delete, undo).
+Tests are in `src/taskReducer.test.ts` and `src/filter.test.ts` (every action, advance three times back to todo, old state
+not changed, unknown id, empty list, clearDone with nothing done, counts after a delete, undo;
+for `filter.ts`: order is kept, input is not changed, counts add up and match `filterTasks`).
+Run them with `npm test` (single run) or `npx vitest` (watch mode while editing).
 
 Output of `npx vitest run --reporter=verbose` (same tests as `npm test`):
 
 ```
 RUN  v5.1.1 assignment3
 
- ✓ src/taskReducer.test.ts > taskReducer > add appends a todo task 1ms
+ ✓ src/filter.test.ts > filterTasks edge cases > returns an empty list when no task has that status 3ms
+ ✓ src/filter.test.ts > filterTasks edge cases > keeps the original order of the tasks 0ms
+ ✓ src/filter.test.ts > filterTasks edge cases > does not change the input array 1ms
+ ✓ src/filter.test.ts > countByFilter edge cases > has a number for every filter button 1ms
+ ✓ src/filter.test.ts > countByFilter edge cases > the three status counts add up to all 0ms
+ ✓ src/filter.test.ts > countByFilter edge cases > matches filterTasks for every filter 0ms
+ ✓ src/taskReducer.test.ts > taskReducer > add appends a todo task 3ms
  ✓ src/taskReducer.test.ts > taskReducer > advance three times returns to todo 0ms
  ✓ src/taskReducer.test.ts > taskReducer > remove deletes the task 0ms
  ✓ src/taskReducer.test.ts > taskReducer > setFilter changes only the filter 0ms
@@ -57,10 +69,10 @@ RUN  v5.1.1 assignment3
  ✓ src/taskReducer.test.ts > filter helpers > works on an empty list 0ms
  ✓ src/taskReducer.test.ts > filter helpers > countByFilter counts each status, also after a delete 0ms
 
- Test Files  1 passed (1)
-      Tests  13 passed (13)
-   Start at  16:38:40
-   Duration  110ms (import 34%, transform 31%, tests 22%, worker 13%)
+ Test Files  2 passed (2)
+      Tests  19 passed (19)
+   Start at  20:22:31
+   Duration  138ms (import 38%, tests 27%, transform 24%, worker 11%)
 ```
 
 ## Bonus 3: Explain your reducer
