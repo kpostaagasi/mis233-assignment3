@@ -21,7 +21,7 @@ function AddForm({ dispatch }: { dispatch: Dispatch<Action> }) {
   }
   return (
     <form action={addTask}>
-      <input name="title" placeholder="New task" />
+      <input name="title" placeholder="New task" aria-label="New task title" />
       <button type="submit">Add</button>
     </form>
   )
@@ -36,7 +36,7 @@ type FilterBarProps = {
 // Four buttons; the active one is bold with a dark background (R5), each shows its count (R6).
 function FilterBar({ active, counts, dispatch }: FilterBarProps) {
   return (
-    <div style={{ display: 'flex', gap: 8, margin: '12px 0' }}>
+    <div role="group" aria-label="Filter tasks by status" style={{ display: 'flex', gap: 8, margin: '12px 0' }}>
       {FILTERS.map((f) => {
         const isActive = f === active
         return (
@@ -63,7 +63,7 @@ function FilterBar({ active, counts, dispatch }: FilterBarProps) {
 
 function TaskList({ tasks, dispatch }: { tasks: Task[]; dispatch: Dispatch<Action> }) {
   // Empty-list message (R6).
-  if (tasks.length === 0) return <p>No tasks here.</p>
+  if (tasks.length === 0) return <p role="status">No tasks here.</p>
   return (
     <ul>
       {tasks.map((t) => (
