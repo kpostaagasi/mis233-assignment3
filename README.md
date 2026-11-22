@@ -88,3 +88,8 @@ Moving the filter into the reducer state made `clearDone` simpler: one action re
 tasks and the filter is kept, all in one place, and the whole screen state is in one object.
 The harder part was that the state type became bigger, and every case now has to copy the
 other fields with `...state`, so forgetting the spread would lose the filter.
+
+## Bonus 4: Git repository
+
+https://github.com/kpostaagasi/mis233-assignment3 (public). The repository has a `.gitignore`
+that leaves out `node_modules` and `dist`, and the four screenshots are in `screenshots/`.
